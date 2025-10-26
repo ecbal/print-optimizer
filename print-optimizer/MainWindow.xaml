@@ -1,0 +1,128 @@
+﻿<Window x:Class="KirtasiyeApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Kırtasiye Print Optimizer"
+        Height="560" Width="900"
+        Background="#f8f9fa"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Üst: Dosya Seç -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Name="BtnSelect"
+                    Width="120"
+                    Margin="0,0,10,0"
+                    Click="BtnSelect_Click"
+                    Background="#007bff"
+                    Foreground="White"
+                    BorderThickness="0"
+                    FontWeight="Bold">Dosya Seç</Button>
+
+            <TextBlock Name="TxtFilePath"
+                       VerticalAlignment="Center"
+                       FontSize="13"
+                       Foreground="Black"/>
+        </StackPanel>
+
+        <!-- Önizleme Alanı -->
+        <Grid Grid.Row="1" Margin="0,10,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Orijinal Görsel -->
+            <Border BorderBrush="#ccc" BorderThickness="1" Margin="5" CornerRadius="6">
+                <Image Name="PreviewOriginal" Stretch="Uniform"/>
+            </Border>
+
+            <!-- Düzenlenmiş Görsel + Crop Layer -->
+            <Grid Grid.Column="1">
+                <Border BorderBrush="#ccc" BorderThickness="1" Margin="5" CornerRadius="6">
+                    <Image Name="PreviewEdited" Stretch="Uniform"/>
+                </Border>
+
+                <!-- Crop Overlay -->
+                <Canvas Name="CropCanvas"
+                        Background="Transparent"
+                        Margin="5"
+                        MouseDown="CropCanvas_MouseDown"
+                        MouseMove="CropCanvas_MouseMove"
+                        MouseUp="CropCanvas_MouseUp">
+                    <Rectangle Name="CropRect"
+                               Stroke="DodgerBlue"
+                               StrokeThickness="2"
+                               Fill="#400000FF"
+                               Visibility="Collapsed"/>
+                </Canvas>
+            </Grid>
+        </Grid>
+
+        <!-- Slider Alanı -->
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,10,0,0">
+
+            <TextBlock Text="Toplam İyileştirme" FontWeight="Bold" Margin="0,0,0,4"/>
+            <Slider Name="TotalSlider" Minimum="0.5" Maximum="1.5" Value="1"
+                    TickFrequency="0.1"
+                    IsSnapToTickEnabled="False"
+                    IsMoveToPointEnabled="False"
+                    ValueChanged="Slider_ValueChanged"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <StackPanel Width="250">
+                    <TextBlock Text="Parlaklık" FontWeight="Bold" Margin="0,0,0,4"/>
+                    <Slider Name="BrightnessSlider" Minimum="0.5" Maximum="1.5" Value="1"
+                            TickFrequency="0.1"
+                            IsSnapToTickEnabled="False"
+                            IsMoveToPointEnabled="False"
+                            ValueChanged="Slider_ValueChanged"/>
+                </StackPanel>
+
+                <StackPanel Width="250">
+                    <TextBlock Text="Kontrast" FontWeight="Bold" Margin="0,0,0,4"/>
+                    <Slider Name="ContrastSlider" Minimum="0.5" Maximum="1.5" Value="1"
+                            TickFrequency="0.1"
+                            IsSnapToTickEnabled="False"
+                            IsMoveToPointEnabled="False"
+                            ValueChanged="Slider_ValueChanged"/>
+                </StackPanel>
+
+                <StackPanel Width="250">
+                    <TextBlock Text="Keskinlik" FontWeight="Bold" Margin="0,0,0,4"/>
+                    <Slider Name="SharpnessSlider" Minimum="0" Maximum="2" Value="0"
+                            TickFrequency="0.2"
+                            IsSnapToTickEnabled="False"
+                            IsMoveToPointEnabled="False"
+                            ValueChanged="Slider_ValueChanged"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Kaydet & Kırp Butonları -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0" Spacing="10">
+                <Button Name="BtnCrop"
+                        Width="150"
+                        Height="36"
+                        Click="BtnCrop_Click"
+                        Background="#ffc107"
+                        Foreground="Black"
+                        BorderThickness="0"
+                        FontWeight="Bold">Kırp</Button>
+
+                <Button Name="BtnSave"
+                        Width="150"
+                        Height="36"
+                        Click="BtnSave_Click"
+                        Background="#198754"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="Bold">Kaydet</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
