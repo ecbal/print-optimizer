@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("print-optimizer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4414923d13aae0af403dc702ea9b85154e676fe")]
 [assembly: System.Reflection.AssemblyProductAttribute("print-optimizer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("print-optimizer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

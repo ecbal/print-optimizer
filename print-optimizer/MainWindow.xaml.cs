@@ -20,7 +20,7 @@ namespace KirtasiyeApp
         private ImageRgba32? _currentImage;
         private System.Timers.Timer? _debounceTimer;
 
-        private Point _cropStart;
+        private System.Windows.Point _cropStart;
         private bool _isCropping = false;
 
         public MainWindow()
@@ -140,7 +140,7 @@ namespace KirtasiyeApp
         {
             if (!_isCropping) return;
 
-            Point pos = e.GetPosition(CropCanvas);
+            System.Windows.Point pos = e.GetPosition(CropCanvas);
             double x = Math.Min(pos.X, _cropStart.X);
             double y = Math.Min(pos.Y, _cropStart.Y);
             double w = Math.Abs(pos.X - _cropStart.X);
@@ -165,37 +165,68 @@ namespace KirtasiyeApp
                 return;
             }
 
-            double x = Canvas.GetLeft(CropRect);
-            double y = Canvas.GetTop(CropRect);
-            double w = CropRect.Width;
-            double h = CropRect.Height;
+            // Seçilen dikdörtgen bilgileri
+            double rectX = Canvas.GetLeft(CropRect);
+            double rectY = Canvas.GetTop(CropRect);
+            double rectW = CropRect.Width;
+            double rectH = CropRect.Height;
 
-            if (w < 5 || h < 5)
+            if (rectW < 5 || rectH < 5)
             {
                 MessageBox.Show("Kırpma alanı çok küçük!");
                 return;
             }
 
-            // Görsel üzerindeki koordinatlara dönüştür
-            var imgSrc = PreviewEdited.Source as BitmapSource;
-            if (imgSrc is null) return;
+            // Görselin kaynak boyutları (piksel)
+            if (PreviewEdited.Source is not BitmapSource bmpSource)
+                return;
 
-            double scaleX = _currentImage.Width / imgSrc.PixelWidth;
-            double scaleY = _currentImage.Height / imgSrc.PixelHeight;
+            double imgW = bmpSource.PixelWidth;
+            double imgH = bmpSource.PixelHeight;
 
-            int cropX = (int)(x * scaleX);
-            int cropY = (int)(y * scaleY);
-            int cropW = (int)(w * scaleX);
-            int cropH = (int)(h * scaleY);
+            // Görselin ekrandaki boyutu
+            double dispW = PreviewEdited.ActualWidth;
+            double dispH = PreviewEdited.ActualHeight;
 
-            // Görseli kırp
-            _currentImage.Mutate(ctx => ctx.Crop(new SixLabors.ImageSharp.Rectangle(cropX, cropY, cropW, cropH)));
+            // Image içeriğinin küçülme oranı
+            double ratio = Math.Min(dispW / imgW, dispH / imgH);
 
-            // Orijinali de aynı şekilde güncelle
-            _originalImage = _currentImage.Clone();
+            // Görselin ortalanma farkı (boşluk)
+            double offsetX = (dispW - imgW * ratio) / 2;
+            double offsetY = (dispH - imgH * ratio) / 2;
 
-            CropRect.Visibility = Visibility.Collapsed;
-            ShowPreview();
+            // CropCanvas boyutu PreviewEdited ile aynıysa, burası doğru dönüşüm yapar:
+            double scaleX = imgW / (dispW - 2 * offsetX);
+            double scaleY = imgH / (dispH - 2 * offsetY);
+
+            // Crop alanını piksel koordinatına dönüştür
+            int cropX = (int)Math.Round((rectX - offsetX) * scaleX);
+            int cropY = (int)Math.Round((rectY - offsetY) * scaleY);
+            int cropW = (int)Math.Round(rectW * scaleX);
+            int cropH = (int)Math.Round(rectH * scaleY);
+
+            // Limitleri koru
+            if (cropX < 0) cropX = 0;
+            if (cropY < 0) cropY = 0;
+            if (cropX + cropW > imgW) cropW = (int)(imgW - cropX);
+            if (cropY + cropH > imgH) cropH = (int)(imgH - cropY);
+
+            try
+            {
+                var cropRect = new SixLabors.ImageSharp.Rectangle(cropX, cropY, cropW, cropH);
+                _currentImage.Mutate(x => x.Crop(cropRect));
+                _originalImage = _currentImage.Clone();
+
+                CropRect.Visibility = Visibility.Collapsed;
+                ShowPreview();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Kırpma işlemi başarısız: {ex.Message}");
+            }
         }
+
+
+
     }
 }

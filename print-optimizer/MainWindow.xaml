@@ -42,26 +42,24 @@
                 <Image Name="PreviewOriginal" Stretch="Uniform"/>
             </Border>
 
-            <!-- Düzenlenmiş Görsel + Crop Layer -->
-            <Grid Grid.Column="1">
-                <Border BorderBrush="#ccc" BorderThickness="1" Margin="5" CornerRadius="6">
+            <!-- Düzenlenmiş Görsel + Crop Overlay -->
+            <Border Grid.Column="1" BorderBrush="#ccc" BorderThickness="1" Margin="5" CornerRadius="6">
+                <Grid>
                     <Image Name="PreviewEdited" Stretch="Uniform"/>
-                </Border>
-
-                <!-- Crop Overlay -->
-                <Canvas Name="CropCanvas"
-                        Background="Transparent"
-                        Margin="5"
-                        MouseDown="CropCanvas_MouseDown"
-                        MouseMove="CropCanvas_MouseMove"
-                        MouseUp="CropCanvas_MouseUp">
-                    <Rectangle Name="CropRect"
-                               Stroke="DodgerBlue"
-                               StrokeThickness="2"
-                               Fill="#400000FF"
-                               Visibility="Collapsed"/>
-                </Canvas>
-            </Grid>
+                    <Canvas Name="CropCanvas"
+                Background="Transparent"
+            MouseDown="CropCanvas_MouseDown"
+            MouseMove="CropCanvas_MouseMove"
+            MouseUp="CropCanvas_MouseUp"
+            Panel.ZIndex="10">
+                        <Rectangle Name="CropRect"
+                   Stroke="DodgerBlue"
+                   StrokeThickness="2"
+                   Fill="#400000FF"
+                   Visibility="Collapsed"/>
+                    </Canvas>
+                </Grid>
+            </Border>
         </Grid>
 
         <!-- Slider Alanı -->
@@ -104,7 +102,7 @@
             </StackPanel>
 
             <!-- Kaydet & Kırp Butonları -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0" Spacing="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
                 <Button Name="BtnCrop"
                         Width="150"
                         Height="36"
@@ -112,7 +110,8 @@
                         Background="#ffc107"
                         Foreground="Black"
                         BorderThickness="0"
-                        FontWeight="Bold">Kırp</Button>
+                        FontWeight="Bold"
+                        Margin="0,0,10,0">Kırp</Button>
 
                 <Button Name="BtnSave"
                         Width="150"
@@ -123,6 +122,7 @@
                         BorderThickness="0"
                         FontWeight="Bold">Kaydet</Button>
             </StackPanel>
+
         </StackPanel>
     </Grid>
 </Window>

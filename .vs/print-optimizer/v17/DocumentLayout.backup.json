@@ -26,8 +26,8 @@
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\bilgi\\Desktop\\print-optimizer\\print-optimizer\\MainWindow.xaml",
               "RelativeDocumentMoniker": "print-optimizer\\MainWindow.xaml",
-              "ToolTip": "C:\\Users\\bilgi\\Desktop\\print-optimizer\\print-optimizer\\MainWindow.xaml",
-              "RelativeToolTip": "print-optimizer\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\bilgi\\Desktop\\print-optimizer\\print-optimizer\\MainWindow.xaml*",
+              "RelativeToolTip": "print-optimizer\\MainWindow.xaml*",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-10-26T22:20:18.168Z",
               "EditorCaption": ""
@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "print-optimizer\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\bilgi\\Desktop\\print-optimizer\\print-optimizer\\MainWindow.xaml.cs",
               "RelativeToolTip": "print-optimizer\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAFsAAAAAAAAAAADwv4AAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAMIAAAAAAAAAAAAgwN4AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-26T22:20:18.088Z",
               "EditorCaption": ""
